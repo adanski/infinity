@@ -5,9 +5,13 @@
 
 <div align="center">
 
-A Reddit client on Android written in Java. It does not have any ads and it features a clean UI and smooth browsing experience
+A Reddit client on Android written in Java. It does not have any ads and it features a clean UI and smooth browsing experience.
 
-<img align="right" src="https://raw.githubusercontent.com/Docile-Alligator/Infinity-For-Reddit/master/fastlane/metadata/android/en-US/images/icon.png" width=200>
+### **This fork allows you to enter your personal [Reddit Client ID/API Key](https://www.reddit.com/prefs/apps) and use Infinity completely free of charge.**
+
+As it is not available in Google Play, the easiest way to get the updates is to use [Obtainium](https://github.com/ImranR98/Obtainium).
+
+<img align="right" src="https://raw.githubusercontent.com/adanski/infinity-personal/master/fastlane/metadata/android/en-US/images/icon.png" width=200>
 
 </div>
 
@@ -15,7 +19,7 @@ A Reddit client on Android written in Java. It does not have any ads and it feat
 
 <div align="center">
 
-Infinity for Reddit is available on Google Play and F-Droid
+Original and paid version of Infinity for Reddit is available on Google Play and F-Droid.
 
   <a href="https://play.google.com/store/apps/details?id=ml.docilealligator.infinityforreddit">
       <img alt="Get it on Google Play" height="80" src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" />
@@ -44,8 +48,8 @@ Infinity for Reddit is available on Google Play and F-Droid
 
 <div align="center">
 
-[![release](https://img.shields.io/github/v/release/Docile-Alligator/Infinity-For-Reddit)](https://github.com/Docile-Alligator/Infinity-For-Reddit/releases)
-[![license](https://img.shields.io/github/license/Docile-Alligator/Infinity-For-Reddit)](LICENSE)
+[![release](https://img.shields.io/github/v/release/Docile-Alligator/Infinity-For-Reddit)](https://github.com/adanski/infinity-personal/releases)
+[![license](https://img.shields.io/github/license/adanski/infinity-personal)](LICENSE)
 [![GitHub issues](https://img.shields.io/github/issues/Docile-Alligator/Infinity-For-Reddit)](https://github.com/Docile-Alligator/Infinity-For-Reddit/issues)
 
 </div>
@@ -59,27 +63,6 @@ Infinity for Reddit is available on Google Play and F-Droid
 Patreon: https://www.patreon.com/docile_alligator
 
 Bitcoin: bc1qxtkd5ap9na7uy8nr9qpt6jny6tdwaj4v43ddle
-
-<details>
-  <summary>Table of Contents</summary>
-
-- [About](#about)
-  - [Built With](#built-with)
-- [Getting Started](#getting-started)
-  - [Prerequisites](#prerequisites)
-  - [Usage](#usage)
-    - [Cookiecutter template](#cookiecutter-template)
-    - [Manual setup](#manual-setup)
-    - [Variables reference](#variables-reference)
-- [Roadmap](#roadmap)
-- [Contributing](#contributing)
-- [Support](#support)
-- [License](#license)
-- [Acknowledgements](#acknowledgements)
-
-</details>
-
----
 
 ## About The Project
 
@@ -109,31 +92,31 @@ Key features of **Infinity For Reddit**:
 </table>
 
 <img 
-  src="https://raw.githubusercontent.com/Wladefant/Infinity-For-Reddit/master/fastlane/metadata/android/en-US/images/phoneScreenshots/1.png" 
+  src="https://raw.githubusercontent.com/adanski/infinity-personal/master/fastlane/metadata/android/en-US/images/phoneScreenshots/1.png" 
   alt="Screenshot 1"
   height="200" >
 <img 
-  src="https://raw.githubusercontent.com/Wladefant/Infinity-For-Reddit/master/fastlane/metadata/android/en-US/images/phoneScreenshots/2.png" 
+  src="https://raw.githubusercontent.com/adanski/infinity-personal/master/fastlane/metadata/android/en-US/images/phoneScreenshots/2.png" 
   alt="Screenshot 2"
   height="200" >
 <img 
-  src="https://raw.githubusercontent.com/Wladefant/Infinity-For-Reddit/master/fastlane/metadata/android/en-US/images/phoneScreenshots/3.png" 
+  src="https://raw.githubusercontent.com/adanski/infinity-personal/master/fastlane/metadata/android/en-US/images/phoneScreenshots/3.png" 
   alt="Screenshot 3"
   height="200" >
 <img 
-  src="https://raw.githubusercontent.com/Wladefant/Infinity-For-Reddit/master/fastlane/metadata/android/en-US/images/phoneScreenshots/4.png" 
+  src="https://raw.githubusercontent.com/adanski/infinity-personal/master/fastlane/metadata/android/en-US/images/phoneScreenshots/4.png" 
   alt="Screenshot 4"
   height="200" >
 <img 
-  src="https://raw.githubusercontent.com/Wladefant/Infinity-For-Reddit/master/fastlane/metadata/android/en-US/images/phoneScreenshots/5.png" 
+  src="https://raw.githubusercontent.com/adanski/infinity-personal/master/fastlane/metadata/android/en-US/images/phoneScreenshots/5.png" 
   alt="Screenshot 5"
   height="200" >
 <img 
-  src="https://raw.githubusercontent.com/Wladefant/Infinity-For-Reddit/master/fastlane/metadata/android/en-US/images/phoneScreenshots/6.png" 
+  src="https://raw.githubusercontent.com/adanski/infinity-personal/master/fastlane/metadata/android/en-US/images/phoneScreenshots/6.png" 
   alt="Screenshot 6"
   height="200" >
 <img 
-  src="https://raw.githubusercontent.com/Wladefant/Infinity-For-Reddit/master/fastlane/metadata/android/en-US/images/phoneScreenshots/7.png" 
+  src="https://raw.githubusercontent.com/adanski/infinity-personal/master/fastlane/metadata/android/en-US/images/phoneScreenshots/7.png" 
   alt="Screenshot 7"
   height="200" >
 
@@ -164,17 +147,8 @@ Here are other ways you can help:
 
 ## License
 
-Distributed under the AGPL-3.0 License. See <a href="https://github.com/Docile-Alligator/Infinity-For-Reddit/blob/master/LICENSE">LICENSE</a> for more information.
+Distributed under the AGPL-3.0 License. See <a href="https://github.com/adanski/infinity-personal/blob/master/LICENSE">LICENSE</a> for more information.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
-
-## Contact
-
-[u/Hostilenemy](https://www.reddit.com/user/Hostilenemy) -
-docilealligator.app@gmail.com (Owner)
-
-or [u/Wladefant](https://www.reddit.com/user/Wladefant) - wladefant@gmail.com (Collaborator)
-
-Project Link: [https://github.com/Docile-Alligator/Infinity-For-Reddit](https://github.com/Docile-Alligator/Infinity-For-Reddit)
 
 <p align="right">(<a href="#top">back to top</a>)</p>

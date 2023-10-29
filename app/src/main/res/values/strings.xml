@@ -1,5 +1,5 @@
 <resources>
-    <string name="application_name" translatable="false">Infinity</string>
+    <string name="application_name" translatable="false">Infinity Personal</string>
     <string name="login_activity_label">Login</string>
     <string name="search_activity_label" translatable="false"> </string>
     <string name="comment_activity_label">Send Comment</string>
