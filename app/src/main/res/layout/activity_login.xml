@@ -32,11 +32,45 @@
             android:id="@+id/two_fa_infO_text_view_login_activity"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="16dp"
-            android:drawablePadding="32dp"
+            android:drawablePadding="6dp"
+            android:fontFamily="?attr/font_family"
+            android:padding="6dp"
             android:text="@string/login_activity_2fa_prompt"
-            android:textSize="?attr/font_default"
-            android:fontFamily="?attr/font_family" />
+            android:textSize="?attr/font_default" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="6dp">
+
+            <TextView
+                android:id="@+id/client_id_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/login_activity_input_client_id" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <EditText
+                    android:id="@+id/client_id_input"
+                    android:layout_width="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="text" />
+
+                <Button
+                    android:id="@+id/client_id_apply"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="@string/login_activity_apply" />
+            </LinearLayout>
+
+        </LinearLayout>
 
         <ml.docilealligator.infinityforreddit.customviews.LollipopBugFixedWebView
             android:id="@+id/webview_login_activity"

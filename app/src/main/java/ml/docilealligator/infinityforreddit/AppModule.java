@@ -23,6 +23,7 @@ import dagger.Module;
 import dagger.Provides;
 import ml.docilealligator.infinityforreddit.customtheme.CustomThemeWrapper;
 import ml.docilealligator.infinityforreddit.customviews.LoopAvailableExoCreator;
+import ml.docilealligator.infinityforreddit.utils.APIUtils;
 import ml.docilealligator.infinityforreddit.utils.CustomThemeSharedPreferencesUtils;
 import ml.docilealligator.infinityforreddit.utils.SharedPreferencesUtils;
 import ml.docilealligator.infinityforreddit.videoautoplay.Config;
@@ -115,7 +116,12 @@ abstract class AppModule {
     @Provides
     @Named("current_account")
     static SharedPreferences provideCurrentAccountSharedPreferences(Application application) {
-        return application.getSharedPreferences(SharedPreferencesUtils.CURRENT_ACCOUNT_SHARED_PREFERENCES_FILE, Context.MODE_PRIVATE);
+        SharedPreferences prefs = application.getSharedPreferences(SharedPreferencesUtils.CURRENT_ACCOUNT_SHARED_PREFERENCES_FILE, Context.MODE_PRIVATE);
+        String accountName = prefs.getString(SharedPreferencesUtils.ACCOUNT_NAME, "deleted");
+        String clientId = prefs.getString(APIUtils.CLIENT_ID_KEY, "NONE");
+        APIUtils.USER_AGENT = APIUtils.USER_AGENT.replaceFirst("/u/.*\\)", "/u/" + accountName + ")");
+        APIUtils.CLIENT_ID = clientId;
+        return prefs;
     }
 
     @Provides

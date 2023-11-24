@@ -27,7 +27,7 @@ public class APIUtils {
 
     public static final String CLIENT_ID_KEY = "client_id";
     public static final String CLIENT_SECRET_KEY = "client_secret";
-    public static final String CLIENT_ID = "NOe2iKrPPzwscA";
+    public static volatile String CLIENT_ID = "NONE";
     public static final String IMGUR_CLIENT_ID = "Client-ID cc671794e0ab397";
     public static final String REDGIFS_CLIENT_ID = "1828d0bcc93-15ac-bde6-0005-d2ecbe8daab3";
     public static final String REDGIFS_CLIENT_SECRET = "TJBlw7jRXW65NAGgFBtgZHu97WlzRXHYybK81sZ9dLM=";
@@ -37,7 +37,7 @@ public class APIUtils {
     public static final String STATE_KEY = "state";
     public static final String STATE = "23ro8xlxvzp4asqd";
     public static final String REDIRECT_URI_KEY = "redirect_uri";
-    public static final String REDIRECT_URI = "infinity://localhost";
+    public static final String REDIRECT_URI = "http://localhost:4321";
     public static final String DURATION_KEY = "duration";
     public static final String DURATION = "permanent";
     public static final String SCOPE_KEY = "scope";
@@ -47,7 +47,7 @@ public class APIUtils {
     public static final String AUTHORIZATION_KEY = "Authorization";
     public static final String AUTHORIZATION_BASE = "bearer ";
     public static final String USER_AGENT_KEY = "User-Agent";
-    public static final String USER_AGENT = "android:ml.docilealligator.infinityforreddit:" + BuildConfig.VERSION_NAME + " (by /u/Hostilenemy)";
+    public static volatile String USER_AGENT = "android:infinity-personal:" + BuildConfig.VERSION_NAME + " (by /u/deleted)";
     public static final String USERNAME_KEY = "username";
 
     public static final String GRANT_TYPE_KEY = "grant_type";

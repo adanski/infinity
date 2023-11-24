@@ -33,6 +33,8 @@ public class Account implements Parcelable {
     private final String code;
     @ColumnInfo(name = "is_current_user")
     private final boolean isCurrentUser;
+    @ColumnInfo(name = "client_id")
+    private final String clientId;
 
     @Ignore
     protected Account(Parcel in) {
@@ -44,6 +46,7 @@ public class Account implements Parcelable {
         refreshToken = in.readString();
         code = in.readString();
         isCurrentUser = in.readByte() != 0;
+        clientId = in.readString();
     }
 
     public static final Creator<Account> CREATOR = new Creator<Account>() {
@@ -60,11 +63,12 @@ public class Account implements Parcelable {
 
     @Ignore
     public static Account getAnonymousAccount() {
-        return new Account(Account.ANONYMOUS_ACCOUNT, null, null, null, null, null, 0, false);
+        return new Account(Account.ANONYMOUS_ACCOUNT, null, null, null, null, null, 0, false, "NONE");
     }
 
     public Account(@NonNull String accountName, String accessToken, String refreshToken, String code,
-                   String profileImageUrl, String bannerImageUrl, int karma, boolean isCurrentUser) {
+                   String profileImageUrl, String bannerImageUrl, int karma, boolean isCurrentUser,
+                   String clientId) {
         this.accountName = accountName;
         this.accessToken = accessToken;
         this.refreshToken = refreshToken;
@@ -73,6 +77,7 @@ public class Account implements Parcelable {
         this.bannerImageUrl = bannerImageUrl;
         this.karma = karma;
         this.isCurrentUser = isCurrentUser;
+        this.clientId = clientId;
     }
 
     @NonNull
@@ -112,6 +117,10 @@ public class Account implements Parcelable {
         return isCurrentUser;
     }
 
+    public String getClientId() {
+        return clientId;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -127,6 +136,7 @@ public class Account implements Parcelable {
         dest.writeString(refreshToken);
         dest.writeString(code);
         dest.writeByte((byte) (isCurrentUser ? 1 : 0));
+        dest.writeString(clientId);
     }
 
     public String getJSONModel() {

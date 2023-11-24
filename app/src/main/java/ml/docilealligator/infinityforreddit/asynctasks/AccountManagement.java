@@ -8,6 +8,7 @@ import java.util.concurrent.Executor;
 import ml.docilealligator.infinityforreddit.RedditDataRoomDatabase;
 import ml.docilealligator.infinityforreddit.account.Account;
 import ml.docilealligator.infinityforreddit.account.AccountDao;
+import ml.docilealligator.infinityforreddit.utils.APIUtils;
 import ml.docilealligator.infinityforreddit.utils.SharedPreferencesUtils;
 
 public class AccountManagement {
@@ -25,6 +26,7 @@ public class AccountManagement {
                     .putString(SharedPreferencesUtils.ACCOUNT_NAME, account.getAccountName())
                     .putString(SharedPreferencesUtils.ACCOUNT_IMAGE_URL, account.getProfileImageUrl()).apply();
             currentAccountSharedPreferences.edit().remove(SharedPreferencesUtils.SUBSCRIBED_THINGS_SYNC_TIME).apply();
+            APIUtils.USER_AGENT = APIUtils.USER_AGENT.replaceFirst("/u/.*\\)", "/u/" + account.getAccountName() + ")");
             handler.post(() -> switchAccountListener.switched(account));
         });
 

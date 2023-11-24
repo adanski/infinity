@@ -2,6 +2,7 @@ package ml.docilealligator.infinityforreddit.activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -12,6 +13,7 @@ import android.text.util.Linkify;
 import android.util.Log;
 import android.view.InflateException;
 import android.view.MenuItem;
+import android.view.inputmethod.InputMethodManager;
 import android.webkit.CookieManager;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -112,9 +114,63 @@ public class LoginActivity extends BaseActivity {
 
         binding.webviewLoginActivity.getSettings().setJavaScriptEnabled(true);
 
+        String clientId = mCurrentAccountSharedPreferences.getString(APIUtils.CLIENT_ID_KEY, "NONE");
+        if (!clientId.isBlank() && !clientId.equals("NONE")) {
+            binding.clientIdApply.setText("Update");
+            binding.clientIdInfo.setText(R.string.login_activity_input_client_id_update);
+            binding.clientIdInput.setText(clientId);
+            loadLoginWebview(clientId);
+        }
+
+        binding.clientIdApply.setOnClickListener(view -> {
+            view.setClickable(false);
+            InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(view.getApplicationWindowToken(), 0);
+
+            String cId = binding.clientIdInput.getText().toString();
+
+            if (cId.isBlank()) {
+                Toast.makeText(LoginActivity.this, "Please enter a Client ID/API Key first", Toast.LENGTH_LONG).show();
+                view.setClickable(true);
+                return;
+            }
+            mCurrentAccountSharedPreferences.edit().putString(APIUtils.CLIENT_ID_KEY, cId).apply();
+            APIUtils.CLIENT_ID = cId;
+            view.setClickable(true);
+            loadLoginWebview(cId);
+        });
+
+        if (!isAgreeToUserAgreement) {
+            TextView messageTextView = new TextView(this);
+            int padding = (int) Utils.convertDpToPixel(24, this);
+            messageTextView.setPaddingRelative(padding, padding, padding, padding);
+            SpannableString message = new SpannableString(getString(R.string.user_agreement_message, "https://www.redditinc.com/policies/user-agreement-september-12-2021", "https://docile-alligator.github.io"));
+            Linkify.addLinks(message, Linkify.WEB_URLS);
+            messageTextView.setMovementMethod(BetterLinkMovementMethod.newInstance().setOnLinkClickListener(new BetterLinkMovementMethod.OnLinkClickListener() {
+                @Override
+                public boolean onClick(TextView textView, String url) {
+                    Intent intent = new Intent(LoginActivity.this, LinkResolverActivity.class);
+                    intent.setData(Uri.parse(url));
+                    startActivity(intent);
+                    return true;
+                }
+            }));
+            messageTextView.setLinkTextColor(getResources().getColor(R.color.colorAccent));
+            messageTextView.setText(message);
+            new MaterialAlertDialogBuilder(this, R.style.MaterialAlertDialogTheme)
+                    .setTitle(getString(R.string.user_agreement_dialog_title))
+                    .setView(messageTextView)
+                    .setPositiveButton(R.string.agree, (dialogInterface, i) -> isAgreeToUserAgreement = true)
+                    .setNegativeButton(R.string.do_not_agree, (dialogInterface, i) -> finish())
+                    .setCancelable(false)
+                    .show();
+        }
+    }
+
+    void loadLoginWebview(String clientId) {
         Uri baseUri = Uri.parse(APIUtils.OAUTH_URL);
         Uri.Builder uriBuilder = baseUri.buildUpon();
-        uriBuilder.appendQueryParameter(APIUtils.CLIENT_ID_KEY, APIUtils.CLIENT_ID);
+        uriBuilder.appendQueryParameter(APIUtils.CLIENT_ID_KEY, clientId);
         uriBuilder.appendQueryParameter(APIUtils.RESPONSE_TYPE_KEY, APIUtils.RESPONSE_TYPE);
         uriBuilder.appendQueryParameter(APIUtils.STATE_KEY, APIUtils.STATE);
         uriBuilder.appendQueryParameter(APIUtils.REDIRECT_URI_KEY, APIUtils.REDIRECT_URI);
@@ -169,15 +225,19 @@ public class LoginActivity extends BaseActivity {
                                                     @Override
                                                     public void onFetchMyInfoSuccess(String name, String profileImageUrl, String bannerImageUrl, int karma) {
                                                         mCurrentAccountSharedPreferences.edit().putString(SharedPreferencesUtils.ACCESS_TOKEN, accessToken)
+                                                                .putString(APIUtils.CLIENT_ID_KEY, clientId)
                                                                 .putString(SharedPreferencesUtils.ACCOUNT_NAME, name)
                                                                 .putString(SharedPreferencesUtils.ACCOUNT_IMAGE_URL, profileImageUrl).apply();
                                                         mCurrentAccountSharedPreferences.edit().remove(SharedPreferencesUtils.SUBSCRIBED_THINGS_SYNC_TIME).apply();
+                                                        APIUtils.CLIENT_ID = clientId;
+                                                        APIUtils.USER_AGENT = APIUtils.USER_AGENT.replaceFirst("/u/.*\\)", "/u/" + name + ")");
                                                         ParseAndInsertNewAccount.parseAndInsertNewAccount(mExecutor, new Handler(), name, accessToken, refreshToken, profileImageUrl, bannerImageUrl,
                                                                 karma, authCode, mRedditDataRoomDatabase.accountDao(),
                                                                 () -> {
                                                                     EventBus.getDefault().post(new NewUserLoggedInEvent());
                                                                     finish();
-                                                                });
+                                                                },
+                                                                clientId);
                                                     }
 
                                                     @Override
@@ -190,7 +250,7 @@ public class LoginActivity extends BaseActivity {
 
                                                         finish();
                                                     }
-                                        });
+                                                });
                                     } catch (JSONException e) {
                                         e.printStackTrace();
                                         Toast.makeText(LoginActivity.this, R.string.parse_json_response_error, Toast.LENGTH_SHORT).show();
@@ -234,32 +294,6 @@ public class LoginActivity extends BaseActivity {
                 super.onPageFinished(view, url);
             }
         });
-
-        if (!isAgreeToUserAgreement) {
-            TextView messageTextView = new TextView(this);
-            int padding = (int) Utils.convertDpToPixel(24, this);
-            messageTextView.setPaddingRelative(padding, padding, padding, padding);
-            SpannableString message = new SpannableString(getString(R.string.user_agreement_message, "https://www.redditinc.com/policies/user-agreement", "https://docile-alligator.github.io"));
-            Linkify.addLinks(message, Linkify.WEB_URLS);
-            messageTextView.setMovementMethod(BetterLinkMovementMethod.newInstance().setOnLinkClickListener(new BetterLinkMovementMethod.OnLinkClickListener() {
-                @Override
-                public boolean onClick(TextView textView, String url) {
-                    Intent intent = new Intent(LoginActivity.this, LinkResolverActivity.class);
-                    intent.setData(Uri.parse(url));
-                    startActivity(intent);
-                    return true;
-                }
-            }));
-            messageTextView.setLinkTextColor(getResources().getColor(R.color.colorAccent));
-            messageTextView.setText(message);
-            new MaterialAlertDialogBuilder(this, R.style.MaterialAlertDialogTheme)
-                    .setTitle(getString(R.string.user_agreement_dialog_title))
-                    .setView(messageTextView)
-                    .setPositiveButton(R.string.agree, (dialogInterface, i) -> isAgreeToUserAgreement = true)
-                    .setNegativeButton(R.string.do_not_agree, (dialogInterface, i) -> finish())
-                    .setCancelable(false)
-                    .show();
-        }
     }
 
     @Override
@@ -294,6 +328,11 @@ public class LoginActivity extends BaseActivity {
         if (typeface != null) {
             binding.twoFaInfOTextViewLoginActivity.setTypeface(typeface);
         }
+        binding.clientIdInfo.setTextColor(mCustomThemeWrapper.getPrimaryTextColor());
+        binding.clientIdInput.setTextColor(mCustomThemeWrapper.getPrimaryTextColor());
+        binding.clientIdApply.setBackgroundTintList(ColorStateList.valueOf(customThemeWrapper.getColorAccent()));
+        binding.clientIdApply.setTextColor(mCustomThemeWrapper.getButtonTextColor());
+
     }
 
     @Override
