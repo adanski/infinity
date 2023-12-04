@@ -1,0 +1,31 @@
+# This workflow will publish the APK as a GitHub release
+
+name: publish
+
+on:
+  push:
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+'
+  workflow_dispatch:
+
+jobs:
+  build:
+    uses: ./.github/workflows/build.yml
+    secrets: inherit
+  publish-gh:
+    runs-on: ubuntu-latest
+
+    needs: build
+    steps:
+    - name: Download APK
+      uses: actions/download-artifact@v3
+      with:
+        name: infinity-personal-${{github.ref_name}}
+
+    - name: Release
+      uses: softprops/action-gh-release@v1
+      with:
+        body: See https://github.com/Docile-Alligator/Infinity-For-Reddit/releases/tag/${{github.ref_name}}
+        files: |
+          infinity-personal-${{github.ref_name}}.apk
+          infinity-personal-${{github.ref_name}}.apk.sha256
