@@ -148,7 +148,7 @@ public class LoginChromeCustomTabActivity extends BaseActivity {
                                                         () -> {
                                                             EventBus.getDefault().post(new NewUserLoggedInEvent());
                                                             finish();
-                                                        });
+                                                        }, APIUtils.CLIENT_ID_KEY);
                                             }
 
                                             @Override
